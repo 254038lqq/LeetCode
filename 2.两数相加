@@ -1,0 +1,65 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        #首先考虑出现空值的情况
+        if l1 == None:
+            return l2
+        if l2 == None:
+            return l1
+
+        #创建一个存储最终结果的变量 ---数据链表 Listnode   
+        result = ListNode(0) 
+        p = result     #指针 
+
+        #创建一个保存进位的变量
+        carry = 0
+
+       #位数相等
+        while l1 and l2:
+            #l1.val 与 l2.val 是指当前位的数值
+            #第一次进入循环也就是l1 与 l2 的第一位
+            #也就是l1.val = 2，l2.val = 5
+            p.next = ListNode((l1.val + l2.val + carry)%10)
+
+            #进位 --- 我们用 // 做除法运算，然后返回其商的整数部分，舍掉余数 
+            carry = (l1.val+l2.val+carry)//10
+
+            #在Listnodez中刷新下一位
+            l1 = l1.next
+            l2 = l2.next
+
+            #存储 Listnode 中的变量也要前进一位
+            p = p.next
+
+        #接下来考虑 l2如果比l1长的情况
+        if l2:
+            while l2:
+                p.next = ListNode((l2.val+carry)%10)
+
+                #进位 --- 我们用 // 做除法运算，然后返回其商的整数部分，舍掉余数 
+                carry = (l2.val+carry)//10
+
+                #在Listnodez中刷新下一位
+                l2 = l2.next
+                p = p.next
+        
+                #接下来考虑 l1如果比l2长的情况
+        if l1:
+            while l1:
+                p.next = ListNode((l1.val+carry)%10)
+
+                #进位 --- 我们用 // 做除法运算，然后返回其商的整数部分，舍掉余数 
+                carry = (l1.val+carry)//10
+
+                #在Listnodez中刷新下一位
+                l1 = l1.next
+                p = p.next
+        #
+        if carry ==1:
+            p.next = ListNode(1)
+
+        return result.next
