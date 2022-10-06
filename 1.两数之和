@@ -1,0 +1,22 @@
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+
+        #思路：建立一个数组，在已知当前值的情况下，我们只需要知道 target - 当前值所得的值，在不在数组中就可以了
+              #甚至可以 把 i 从前往后遍历一下，在找 j 的时候，我们只从 i 以前已经遍历过的部分来寻找
+              #我们需要一边 遍历，一遍记录，记录 遍历过的数字，以及它在 nums中的下标/索引
+
+        #先建立一个空字典
+        a = {}
+        # 从前往后遍历数组
+        for i in  range(len(nums)):
+            #当前值
+            s = nums[i]
+            #目标值
+            t = target - s
+            #记录：如果目标值不存在与 字典 a 中，则记录其值 key  与 索引 value
+            if t not in a:
+                #其实就是将当前数值 s，及其在数组中的下标 i存放到字典中
+                a[s] = i
+            else:
+                #存在的话，就是找到了，则返回两个数的下标
+                return[a[t],i]
